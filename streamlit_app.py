@@ -11,6 +11,9 @@ from langchain.chains import ConversationalRetrievalChain
 from htmlTemplates import css, bot_template, user_template
 #from langchain.llms import HuggingFaceHub
 
+# Set the page configuration at the top of the script
+st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
+
 
 
 def get_pdf_text(pdf_docs):
@@ -64,12 +67,6 @@ def handle_userinput(user_question):
 
 
 def main():
-    load_dotenv()
-    st.set_page_config(page_title="Chat with multiple PDFs",
-                       page_icon=":books:")
-    st.write(css, unsafe_allow_html=True)
-    st.sidebar.markdown('![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=https://share.streamlit.io/https://your-ai-buddy.streamlit.app/=VisitorsCount&labelColor=000000&logo=GitHub&logoColor=FFFFFF&color=1D70B8&style=for-the-badge)')
-
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     if "chat_history" not in st.session_state:
@@ -77,12 +74,57 @@ def main():
 
     st.header("Chat with multiple PDFs :books:")
     user_question = st.text_input("Ask a question about your documents:")
-    st.button("Submit")
+    st.button("Ask!")
     if user_question:
         handle_userinput(user_question)
-    
-    
+
     with st.sidebar:
+        # Add a Markdown component to display the greeting
+        st.markdown(" Hi there, My name is Ashadullah Danish, This app is developed by me and this very early stage product if you have any feedback or suggestion please let me know.")
+
+        links_row = "<a href='https://www.linkedin.com/in/ashadullah-danish/' target='_blank'>" \
+                    "<img src='https://img.icons8.com/color/48/000000/linkedin.png' width='30'></a>" \
+                    " | " \
+                    "<a href='https://github.com/AshadullahDanish' target='_blank'>" \
+                    "<img src='https://img.icons8.com/color/48/000000/github.png' width='30'></a>" \
+                    " | " \
+                    "<a href='https://www.kaggle.com/ashadullah' target='_blank'>" \
+                    "<img src='https://www.kaggle.com/static/images/site-logo.png' width='30'></a>" \
+                    " | " \
+                    "<a href='https://ashadullahdanish.netlify.app/' target='_blank'>" \
+                    "<img src='https://img.icons8.com/color/48/000000/globe--v1.png' width='30'></a>"
+
+        # Display the links row using Markdown
+        st.markdown(links_row, unsafe_allow_html=True)
+
+        # Function to increment view count
+        def increment_views():
+            # Read current view count from file
+            try:
+                with open("view_count.txt", "r") as file:
+                    views = int(file.read())
+            except FileNotFoundError:
+                # If file doesn't exist, initialize view count to 0
+                views = 0
+
+            # Increment view count
+            views += 1
+
+            # Write updated view count to file
+            with open("view_count.txt", "w") as file:
+                file.write(str(views))
+
+            return views
+
+        # Increment view count only once per user visit
+        if not st.session_state.get("view_counted", False):
+            total_views = increment_views()
+            st.session_state.view_counted = True
+        else:
+            total_views = int(open("view_count.txt", "r").read())
+
+        # Display total views
+        st.write("Total Views:", total_views)
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
@@ -91,7 +133,7 @@ def main():
         if selected_model == "OpenAI":
             api_key = st.text_input("OpenAI API Key")
         elif selected_model == "Hugging Face":
-            #api_key = st.text_input("Hugging Face API Key")
+            # api_key = st.text_input("Hugging Face API Key")
             st.write("This app currently works with OpenAI only due to hardware constraints on Streamlit. Running open-source models on Streamlit can be very costly. However, you can run it on your PC by downloading the code and uncommenting the line.")
         if st.button("Process"):
             with st.spinner("Processing"):
@@ -111,3 +153,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+

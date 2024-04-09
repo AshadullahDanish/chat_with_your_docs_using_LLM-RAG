@@ -149,7 +149,7 @@ def main():
 
                 # create conversation chain
                 st.session_state.conversation = get_conversation_chain(vectorstore, api_key)
-                #st.write("Processing completed successfully!")
+                st.write("Processing completed successfully!")
 
 
 if __name__ == '__main__':

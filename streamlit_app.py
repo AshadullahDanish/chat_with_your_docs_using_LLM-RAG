@@ -36,12 +36,10 @@ def get_text_chunks(text):
     return chunks
 
 
-def get_vectorstore(text_chunks):
-    embeddings = OpenAIEmbeddings()
-    # embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
+def get_vectorstore(text_chunks, api_key):
+    embeddings = OpenAIEmbeddings(openai_api_key=api_key)
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
-
 
 def get_conversation_chain(vectorstore, api_key):
     llm = ChatOpenAI(openai_api_key=api_key)
@@ -52,6 +50,7 @@ def get_conversation_chain(vectorstore, api_key):
         memory=memory
     )
     return conversation_chain
+
 
 def handle_userinput(user_question):
     response = st.session_state.conversation({'question': user_question})
@@ -73,6 +72,7 @@ def main():
         st.session_state.chat_history = None
 
     st.header("Chat with multiple PDFs :books:")
+    st.write(css, unsafe_allow_html=True)
     user_question = st.text_input("Ask a question about your documents:")
     st.button("Ask!")
     if user_question:
@@ -125,6 +125,7 @@ def main():
 
         # Display total views
         st.write("Total Views:", total_views)
+        
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
@@ -144,11 +145,11 @@ def main():
                 text_chunks = get_text_chunks(raw_text)
 
                 # create vector store
-                vectorstore = get_vectorstore(text_chunks)
+                vectorstore = get_vectorstore(text_chunks, api_key)
 
                 # create conversation chain
                 st.session_state.conversation = get_conversation_chain(vectorstore, api_key)
-                st.write("Processing completed successfully!")
+                #st.write("Processing completed successfully!")
 
 
 if __name__ == '__main__':

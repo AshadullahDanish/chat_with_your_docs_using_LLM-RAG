@@ -74,7 +74,7 @@ docs/_build/
 # PyBuilder
 .pybuilder/
 target/
-
+view_counter.txt
 # Jupyter Notebook
 .ipynb_checkpoints
 

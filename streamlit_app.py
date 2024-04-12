@@ -3,18 +3,62 @@ from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-#from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_openai import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from htmlTemplates import css, bot_template, user_template
-#from langchain.llms import HuggingFaceHub
 
-# Set the page configuration at the top of the script
-#st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
+css = '''
+<style>
+.chat-message {
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: flex-end;
+}
+.chat-message.user {
+    background-color: #DCF8C6;
+    justify-content: flex-end;
+}
+.chat-message.bot {
+    background-color: #E5E5EA;
+    justify-content: flex-start;
+}
+.chat-message .avatar {
+    width: 20%;
+}
+.chat-message .avatar img {
+    max-width: 78px;
+    max-height: 78px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.chat-message .message {
+    width: 80%;
+    padding: 0 1.5rem;
+    color: #000;
+}
+</style>
+'''
 
+bot_template = '''
+<div class="chat-message bot">
+    <div class="avatar">
+        <img src="https://i.ibb.co/cN0nmSj/Screenshot-2023-05-28-at-02-37-21.png" style="max-height: 78px; max-width: 78px; border-radius: 50%; object-fit: cover;">
+    </div>
+    <div class="message">{{MSG}}</div>
+</div>
+'''
 
+user_template = '''
+<div class="chat-message user">
+    <div class="avatar">
+        <img src="https://i.ibb.co/rMcg7sY/unnamed.jpg">
+    </div>
+    <div class="message">{{MSG}}</div>
+</div>
+'''
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -23,7 +67,6 @@ def get_pdf_text(pdf_docs):
         for page in pdf_reader.pages:
             text += page.extract_text()
     return text
-
 
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(
@@ -34,7 +77,6 @@ def get_text_chunks(text):
     )
     chunks = text_splitter.split_text(text)
     return chunks
-
 
 def get_vectorstore(text_chunks, api_key):
     embeddings = OpenAIEmbeddings(openai_api_key=api_key)
@@ -51,7 +93,6 @@ def get_conversation_chain(vectorstore, api_key):
     )
     return conversation_chain
 
-
 def handle_userinput(user_question):
     response = st.session_state.conversation({'question': user_question})
     st.session_state.chat_history = response['chat_history']
@@ -63,7 +104,6 @@ def handle_userinput(user_question):
         else:
             st.write(bot_template.replace(
                 "{{MSG}}", message.content), unsafe_allow_html=True)
-
 
 def main():
     st.set_page_config(page_title="Chat with multiple PDFs",
@@ -77,10 +117,9 @@ def main():
 
     st.header("Chat with multiple PDFs :books:")
     user_question = st.text_input("Ask a question about your documents:")
-    #st.button("Ask!")
     if user_question:
         handle_userinput(user_question)
-    
+
     with st.sidebar:
         # Add a Markdown component to display the greeting
         st.markdown(" Hi there, My name is Ashadullah Danish, This app is developed by me and this very early stage product if you have any feedback or suggestion please let me know.")
@@ -128,10 +167,11 @@ def main():
 
         # Display total views
         st.write("Total Views:", total_views)
-        
+
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
+
         model_options = ["OpenAI", "Hugging Face"]
         selected_model = st.selectbox("Select a model", model_options)
         if selected_model == "OpenAI":
@@ -153,7 +193,6 @@ def main():
                 # create conversation chain
                 st.session_state.conversation = get_conversation_chain(vectorstore, api_key)
                 st.write("Processing completed successfully!")
-
 
 if __name__ == '__main__':
     main()

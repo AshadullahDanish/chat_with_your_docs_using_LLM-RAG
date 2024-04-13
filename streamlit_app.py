@@ -3,18 +3,11 @@ from dotenv import load_dotenv
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
-#from langchain.embeddings import HuggingFaceInstructEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_openai import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from htmlTemplates import css, bot_template, user_template
-#from langchain.llms import HuggingFaceHub
-
-# Set the page configuration at the top of the script
-#st.set_page_config(page_title="Chat with multiple PDFs", page_icon=":books:")
-
-
+from langchain_core.messages import AIMessage, HumanMessage
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -23,7 +16,6 @@ def get_pdf_text(pdf_docs):
         for page in pdf_reader.pages:
             text += page.extract_text()
     return text
-
 
 def get_text_chunks(text):
     text_splitter = CharacterTextSplitter(
@@ -34,7 +26,6 @@ def get_text_chunks(text):
     )
     chunks = text_splitter.split_text(text)
     return chunks
-
 
 def get_vectorstore(text_chunks, api_key):
     embeddings = OpenAIEmbeddings(openai_api_key=api_key)
@@ -52,35 +43,39 @@ def get_conversation_chain(vectorstore, api_key):
     return conversation_chain
 
 
+                
 def handle_userinput(user_question):
-    response = st.session_state.conversation({'question': user_question})
-    st.session_state.chat_history = response['chat_history']
+    st.session_state.chat_history.append(HumanMessage(content=user_question))
 
-    for i, message in enumerate(st.session_state.chat_history):
-        if i % 2 == 0:
-            st.write(user_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
-        else:
-            st.write(bot_template.replace(
-                "{{MSG}}", message.content), unsafe_allow_html=True)
+    response = st.session_state.conversation.invoke({'question': user_question})
+    new_messages = response['chat_history']
+
+    for message in new_messages:
+        if isinstance(message, AIMessage):
+            with st.chat_message("AI"):
+                st.markdown(message.content)
+        elif isinstance(message, HumanMessage):
+            with st.chat_message("Human"):
+                st.markdown(message.content)
+
+    st.session_state.chat_history.extend(new_messages)
+
 
 
 def main():
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
-    st.write(css, unsafe_allow_html=True)
 
     if "conversation" not in st.session_state:
         st.session_state.conversation = None
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = None
+        st.session_state.chat_history = []
 
     st.header("Chat with multiple PDFs :books:")
     user_question = st.chat_input("Ask a question about your documents:")
-
-    if user_question:
+    if user_question is not None and user_question.strip() != "":
         handle_userinput(user_question)
-    
+
     with st.sidebar:
         # Add a Markdown component to display the greeting
         st.markdown(" Hi there, My name is Ashadullah Danish, This app is developed by me and this very early stage product if you have any feedback or suggestion please let me know.")
@@ -128,10 +123,11 @@ def main():
 
         # Display total views
         st.write("Total Views:", total_views)
-        
+
         st.subheader("Your documents")
         pdf_docs = st.file_uploader(
             "Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
+
         model_options = ["OpenAI", "Hugging Face"]
         selected_model = st.selectbox("Select a model", model_options)
         if selected_model == "OpenAI":

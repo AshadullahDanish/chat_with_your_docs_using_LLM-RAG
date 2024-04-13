@@ -61,7 +61,6 @@ def handle_userinput(user_question):
     st.session_state.chat_history.extend(new_messages)
 
 
-
 def main():
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")

@@ -220,7 +220,7 @@ def main():
             "Select AI Model", 
             [
                 "OpenAI GPT-3.5 Turbo", 
-                "Groq Llama2 70B", 
+                "Groq Llama-3 70B", 
                 "Groq Mixtral 8x7B",
                 "Groq Gemma 7B"
             ]
@@ -245,16 +245,16 @@ def main():
                 'api_key': model_api_key,
                 'model': 'gpt-3.5-turbo'
             }
-        elif selected_model == "Groq Llama3 70B":
+        elif selected_model == "Groq Llama-3 70B":
             model_api_key = st.text_input(
-                "Groq API Key",
-                type="password",
-                help="Required for Llama3-70B access"
+                "Groq API Key", 
+                type="password", 
+                help="Required for processing PDFs with Groq's Llama3 model"
             )
             model_config = {
                 'type': 'Groq',
                 'api_key': model_api_key,
-                'model': 'llama3-70b-8192'  # Official Groq identifier
+                'model': 'llama3-70b-8192'
             }
         elif selected_model == "Groq Mixtral 8x7B":
             model_api_key = st.text_input(

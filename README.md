@@ -23,10 +23,12 @@
 ## ⚡ Quick Start
 
 1. **Clone Repository**
+
 ```bash
 git clone https://github.com/AshadullahDanish/multi-pdf-chat-assistant.git
 cd multi-pdf-chat-assistant
 2. **Install Dependencies**
+
 ```bash
 pip install -r requirements.txt
 ```

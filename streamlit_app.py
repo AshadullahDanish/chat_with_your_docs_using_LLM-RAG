@@ -245,16 +245,16 @@ def main():
                 'api_key': model_api_key,
                 'model': 'gpt-3.5-turbo'
             }
-        elif selected_model == "Groq Llama2 70B":
+        elif selected_model == "Groq Llama3 70B":
             model_api_key = st.text_input(
-                "Groq API Key", 
-                type="password", 
-                help="Required for processing PDFs with Groq's Llama2 model"
+                "Groq API Key",
+                type="password",
+                help="Required for Llama3-70B access"
             )
             model_config = {
                 'type': 'Groq',
                 'api_key': model_api_key,
-                'model': 'llama2-70b-4096'  
+                'model': 'llama3-70b-8192'  # Official Groq identifier
             }
         elif selected_model == "Groq Mixtral 8x7B":
             model_api_key = st.text_input(

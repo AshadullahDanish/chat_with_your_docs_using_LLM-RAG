@@ -157,15 +157,3 @@ MIT License - See [LICENSE](LICENSE) for details
 **🔧 Maintained by:** [Ashadullah Danish](https://ashadullahdanish.netlify.app/)
 ```
 
-This comprehensive README includes:
-
-1. Modern visual design with badges and diagrams
-2. Detailed technical specifications
-3. Performance comparisons
-4. Setup/configuration guides
-5. Troubleshooting section
-6. Community links
-7. License information
-8. Pro tips for optimal usage
-
-Replace placeholder images with actual screenshots of your application for better user engagement. The Mermaid diagram will automatically render in GitHub's Markdown viewer.

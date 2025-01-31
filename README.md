@@ -2,7 +2,7 @@
 
 **A Next-Gen RAG System Powered by Groq LPUs & State-of-the-Art LLMs**
 
-![RAG Architecture](https://miro.medium.com/v2/resize:fit:1400/1*5ZLci3SuR0zM_QlZOADv8Q.png)
+
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-00ADD8?style=for-the-badge&logo=langchain&logoColor=white)
 ![Groq](https://img.shields.io/badge/Groq-3DDC84?style=for-the-badge&logo=groq&logoColor=white)
@@ -27,7 +27,7 @@
 ```bash
 Python 3.9+
 Groq Cloud Account (free tier available)
-
+```
 ### Installation
 ```bash
 git clone https://github.com/AshadullahDanish/multi-pdf-chat-assistant.git
@@ -105,10 +105,9 @@ EMBEDDING_OPTIONS = {
 ## 💻 UI Features
 
 1. **Multi-File PDF Upload**  
-   ![Upload Demo](https://via.placeholder.com/600x300/2D3748/fff?text=Drag+and+Drop+PDFs+Here)
-
+   ![Upload Demo](upload.png)
 2. **Real-Time Chat Interface**  
-   ![Chat Demo](https://via.placeholder.com/600x300/2D3748/fff?text=AI+Response+Streaming)
+   ![Upload Demo and Chat Demo](chatbot.png)
 
 3. **Model Switching**  
    ```python

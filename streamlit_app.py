@@ -254,7 +254,7 @@ def main():
             model_config = {
                 'type': 'Groq',
                 'api_key': model_api_key,
-                'model': 'llama-2-70b-4096'
+                'model': 'llama2-70b-4096'  # Corrected model name
             }
         elif selected_model == "Groq Mixtral 8x7B":
             model_api_key = st.text_input(

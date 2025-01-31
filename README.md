@@ -105,9 +105,9 @@ EMBEDDING_OPTIONS = {
 ## 💻 UI Features
 
 1. **Multi-File PDF Upload**  
-   ![Upload Demo](upload.png)
+   ![Upload Demo](assets\chatbot.png)
 2. **Real-Time Chat Interface**  
-   ![Upload Demo and Chat Demo](chatbot.png)
+   ![Upload Demo and Chat Demo](assets\chatbot.png)
 
 3. **Model Switching**  
    ```python

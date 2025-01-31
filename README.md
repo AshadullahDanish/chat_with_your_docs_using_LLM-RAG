@@ -1,4 +1,3 @@
-```markdown
 # 📚 Multi-PDF Chat Assistant 🤖
 
 *A powerful AI-powered document analysis tool with lightning-fast Groq integration*
@@ -27,8 +26,6 @@
 ```bash
 git clone https://github.com/AshadullahDanish/multi-pdf-chat-assistant.git
 cd multi-pdf-chat-assistant
-```
-
 2. **Install Dependencies**
 ```bash
 pip install -r requirements.txt

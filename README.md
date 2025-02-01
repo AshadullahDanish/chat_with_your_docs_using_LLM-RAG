@@ -3,7 +3,7 @@
 **A Next-Gen RAG System Powered by Groq LPUs & State-of-the-Art LLMs**
 
 ![Streamlit](https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=Streamlit&logoColor=white)
-+ ![Live Demo](https://img.shields.io/badge/Live_Demo-00C7B7?style=for-the-badge&logo=streamlit&logoColor=white)
+![Live Demo](https://img.shields.io/badge/Live_Demo-00C7B7?style=for-the-badge&logo=streamlit&logoColor=white)
 ![LangChain](https://img.shields.io/badge/LangChain-00ADD8?style=for-the-badge&logo=langchain&logoColor=white)
 ![Groq](https://img.shields.io/badge/Groq-3DDC84?style=for-the-badge&logo=groq&logoColor=white)
 

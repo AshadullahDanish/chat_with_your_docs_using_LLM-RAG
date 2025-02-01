@@ -109,9 +109,9 @@ EMBEDDING_OPTIONS = {
 ## 💻 UI Features
 
 1. **Multi-File PDF Upload**  
-   ![Upload Demo](cI:\DATA science Practice\LLM Project\chat with multiple documents\assets\upload.png)
+   ![Upload Demo](upload.png)
 2. **Real-Time Chat Interface**  
-   ![Upload Demo and Chat Demo](cI:\DATA science Practice\LLM Project\chat with multiple documents\assets\chatbot.png)
+   ![Upload Demo and Chat Demo](chatbot.png)
 
 3. **Model Switching**  
    ```python

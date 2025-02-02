@@ -34,7 +34,7 @@ Groq Cloud Account (free tier available)
 ```
 ### Installation
 ```bash
-git clone https://github.com/AshadullahDanish/hat_with_your_docs_using_LLM-RAG.git
+git clone https://github.com/AshadullahDanish/chat_with_your_docs_using_LLM-RAG.git
 cd multi-pdf-chat-assistant
 pip install -r requirements.txt
 ```

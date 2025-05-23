@@ -189,7 +189,7 @@ def main():
     with st.sidebar:
         # Greeting and introduction
         st.markdown("## About the App")
-        st.info("Hi there, My name is Ashadullah Danish, This app is developed by me and this very early stage product if you have any feedback or suggestion please let me know.")
+        st.info("Hi there, My name is Mohit Lohani, This app is developed by me and this very early stage product if you have any feedback or suggestion please let me know.")
 
         # Social links
         links_row = ("<a href='https://www.linkedin.com/in/ashadullah-danish' target='_blank'>" \
